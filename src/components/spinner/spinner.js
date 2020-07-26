@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Spinner = (props) => (
+const Spinner = () => (
     <div className="loading">
         <div className="loading__container">
             <div>
-<div>{props.x.y}</div>
+                <div></div>
                 <div></div>
                 <div></div>
                 <div></div>

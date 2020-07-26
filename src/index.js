@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Spinner from './components/spinner';
 import ErrorBoundary from './components/error-boundary';
+import App from './components/app';
 
 ReactDOM.render((
     <ErrorBoundary>
-        <Spinner />
+        <App />
     </ErrorBoundary>
 ), document.getElementById('root'));

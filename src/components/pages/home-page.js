@@ -1,9 +1,13 @@
 import React from 'react';
+import BookList from '../book-list';
+import { connect } from 'react-redux';
 
-const HomePage = () => {
+const HomePage = ({ books }) => {
     return (
-        <h1>Home Page</h1>
+        <BookList books={books}/>
     )
 }
 
-export default HomePage;
+const mapStateToProps = ({ books }) => ({ books })
+
+export default connect(mapStateToProps)(HomePage);

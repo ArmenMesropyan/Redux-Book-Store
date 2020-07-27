@@ -1,3 +1,16 @@
 .books__item {
     padding: 0;
 }
+
+.books__title {
+    display: block;
+    text-align: center;
+}
+
+.books__title--author {
+    margin-bottom: 20px;
+}
+
+.books__title--title {
+    font-size: 20px;
+}

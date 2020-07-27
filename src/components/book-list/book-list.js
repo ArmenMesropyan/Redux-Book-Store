@@ -5,7 +5,7 @@ import ErrorIndicator from '../error-indicator';
 import { connect } from 'react-redux';
 import { withBookStore } from '../hoc';
 import { compose } from '../../utils';
-import { booksLoaded, booksRequested, booksFailed  } from '../../actions';
+import { fetchBooks } from '../../actions';
 
 const BookList = (props) => {
     useEffect(() => {
@@ -33,20 +33,9 @@ const BookList = (props) => {
     )
 }
 const mapStateToProps = ({ books, loading, error }) => ({ books, loading, error });
-const mapDispatchToProps = (dispatch, ownProps) => {
-    const { bookStore } = ownProps;
-    return {
-        fetchBooks: async() => {
-            try {
-                dispatch(booksRequested());
-                const data = await bookStore.getBooks();
-                dispatch(booksLoaded(data));
-            } catch (error) {
-                dispatch(booksFailed(error));
-            }
-        }
-    }
-}
+const mapDispatchToProps = (dispatch, { bookStore }) => ({
+    fetchBooks: fetchBooks(dispatch, bookStore),
+})
 
 export default compose(
                     withBookStore(),

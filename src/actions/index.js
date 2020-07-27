@@ -12,4 +12,11 @@ const booksFailed = (error) => ({
     payload: error,
 })
 
-export { booksRequested, booksLoaded, booksFailed };
+const fetchBooks = (dispatch, bookStore) => () => {
+    dispatch(booksRequested());
+    bookStore.getBooks()
+             .then(data => dispatch(booksLoaded(data)))
+             .catch(error => dispatch(booksFailed(error)))
+}
+
+export { booksRequested, booksLoaded, booksFailed, fetchBooks };

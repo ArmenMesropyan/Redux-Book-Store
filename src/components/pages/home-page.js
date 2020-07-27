@@ -3,7 +3,9 @@ import BookList from '../book-list';
 
 const HomePage = () => {
     return (
-        <BookList />
+        <main className="home-page">
+            <BookList />
+        </main>
     )
 }
 

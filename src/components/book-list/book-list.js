@@ -16,9 +16,12 @@ const BookList = ({ books, bookStore, booksLoaded }) => {
     ));
 
     return (
-        <ul>
-            { elements }
-        </ul>
+        <section className="home-page__books books">
+            <h2 className="visually-hidden">Books List</h2>
+            <ul className="books__list">
+                { elements }
+            </ul>
+        </section>
     )
 }
 const mapStateToProps = ({ books }) => ({ books });

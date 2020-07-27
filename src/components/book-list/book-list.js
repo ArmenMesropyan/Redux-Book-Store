@@ -5,15 +5,11 @@ import ErrorIndicator from '../error-indicator';
 import { connect } from 'react-redux';
 import { withBookStore } from '../hoc';
 import { compose } from '../../utils';
-import * as actions from '../../actions';
+import { booksLoaded, booksRequested, booksFailed  } from '../../actions';
 
 const BookList = (props) => {
     useEffect(() => {
-        const { booksLoaded, booksRequested, bookStore, booksFailed  } = props;
-        booksRequested();
-        bookStore.getBooks()
-                 .then(data => booksLoaded(data))
-                 .catch(booksFailed);
+        props.fetchBooks();
     }, []);
 
     const { loading, error, books } = props;
@@ -28,15 +24,31 @@ const BookList = (props) => {
     return (
         <section className="home-page__books books">
             <h2 className="visually-hidden">Books List</h2>
-            <ul className="books__list">
-                { elements }
-            </ul>
+            <div className="container">
+                <ul className="books__list row">
+                    { elements }
+                </ul>
+            </div>
         </section>
     )
 }
 const mapStateToProps = ({ books, loading, error }) => ({ books, loading, error });
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const { bookStore } = ownProps;
+    return {
+        fetchBooks: async() => {
+            try {
+                dispatch(booksRequested());
+                const data = await bookStore.getBooks();
+                dispatch(booksLoaded(data));
+            } catch (error) {
+                dispatch(booksFailed(error));
+            }
+        }
+    }
+}
 
 export default compose(
                     withBookStore(),
-                    connect(mapStateToProps, actions)
+                    connect(mapStateToProps, mapDispatchToProps)
                 )(BookList);

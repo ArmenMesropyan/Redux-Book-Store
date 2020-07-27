@@ -3,7 +3,7 @@ import React from 'react';
 const BookListItem = ({ book }) => {
     const { title, author, image } = book;
     return (
-        <li className="books__item card mb-3 col-md-4">
+        <li className="books__item card m-3 col-md-4">
             <h3 className="books__title card-header">
                 <span className="books__title books__title--author text-success">
                     { author }

@@ -1,5 +1,11 @@
 export default class BookstoreService {
     getBooks() {
-        return [];
+        return [
+            {
+                id: 1,
+                title: 'JavaScript Book',
+                author: 'Armen Mesropyan',
+            }
+        ];
     }
 }

@@ -1,14 +1,14 @@
 const booksLoaded = (books) => ({
-    type: 'BOOKS_LOADED',
+    type: 'FETCH_BOOKS_SUCCESS',
     payload: books,
 })
 
 const booksRequested = () => ({
-    type: 'BOOKS_REQUESTED',
+    type: 'FETCH_BOOKS_REQUEST',
 })
 
 const booksFailed = (error) => ({
-    type: 'BOOKS_FAILED',
+    type: 'FETCH_BOOKS_FAILURE',
     payload: error,
 })
 

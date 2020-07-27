@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Spinner = () => (
-    <div className="loading">
+const Spinner = ({ className = '' }) => (
+    <div className={`loading ${className}`}>
         <div className="loading__container">
             <div>
                 <div></div>

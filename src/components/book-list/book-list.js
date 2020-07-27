@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react';
 import BookListItem from '../book-list-item';
+import Spinner from '../spinner';
 import { connect } from 'react-redux';
 import { withBookStore } from '../hoc';
-import * as actions from '../../actions';
 import { compose } from '../../utils';
+import * as actions from '../../actions';
 
-const BookList = ({ books, bookStore, booksLoaded }) => {
+const BookList = ({ books, bookStore, loading, booksLoaded }) => {
     useEffect(() => {
-        const data = bookStore.getBooks();
-        booksLoaded(data);
+        bookStore.getBooks()
+                 .then(data => booksLoaded(data));
     }, []);
+
+    if (loading) return <Spinner className="books__loading"/>
 
     const elements = books.map(({ id, ...book }) => (
         <BookListItem book={book} key={id}/>
@@ -24,7 +27,7 @@ const BookList = ({ books, bookStore, booksLoaded }) => {
         </section>
     )
 }
-const mapStateToProps = ({ books }) => ({ books });
+const mapStateToProps = ({ books, loading }) => ({ books, loading });
 
 export default compose(
                     withBookStore(),

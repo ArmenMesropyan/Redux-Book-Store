@@ -3,6 +3,7 @@ import BookListItem from '../book-list-item';
 import { connect } from 'react-redux';
 import { withBookStore } from '../hoc';
 import * as actions from '../../actions';
+import { compose } from '../../utils';
 
 const BookList = ({ books, bookStore, booksLoaded }) => {
     useEffect(() => {
@@ -22,4 +23,7 @@ const BookList = ({ books, bookStore, booksLoaded }) => {
 }
 const mapStateToProps = ({ books }) => ({ books });
 
-export default withBookStore()(connect(mapStateToProps, actions)(BookList));
+export default compose(
+                    withBookStore(),
+                    connect(mapStateToProps, actions)
+                )(BookList);

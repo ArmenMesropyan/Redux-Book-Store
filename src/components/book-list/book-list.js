@@ -7,16 +7,18 @@ import { withBookStore } from '../hoc';
 import { compose } from '../../utils';
 import { fetchBooks } from '../../actions';
 
-const BookList = (props) => {
+const BookListContainer = ({ loading, error, books, fetchBooks }) => {
     useEffect(() => {
-        props.fetchBooks();
+        fetchBooks();
     }, []);
-
-    const { loading, error, books } = props;
 
     if (loading) return <Spinner className="books__loading"/>
     if (error) return <ErrorIndicator />
 
+    return <BookList books={books} />
+}
+
+const BookList = ({ books }) => {
     const elements = books.map(({ id, ...book }) => (
         <BookListItem book={book} key={id}/>
     ));
@@ -40,4 +42,4 @@ const mapDispatchToProps = (dispatch, { bookStore }) => ({
 export default compose(
                     withBookStore(),
                     connect(mapStateToProps, mapDispatchToProps)
-                )(BookList);
+                )(BookListContainer);

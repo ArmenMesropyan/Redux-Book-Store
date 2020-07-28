@@ -7,6 +7,12 @@
     text-align: center;
 }
 
+.books__price {
+    font-size: 30px;
+    display: block;
+    text-align: right;
+}
+
 .books__title--author {
     margin-bottom: 20px;
 }

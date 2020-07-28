@@ -12,6 +12,11 @@ const booksFailed = (error) => ({
     payload: error,
 })
 
+const bookAddedToCart = (id) => ({
+    type: 'BOOK_ADDED_TO_CART',
+    payload: id,
+})
+
 const fetchBooks = (dispatch, bookStore) => () => {
     dispatch(booksRequested());
     bookStore.getBooks()
@@ -19,4 +24,4 @@ const fetchBooks = (dispatch, bookStore) => () => {
              .catch(error => dispatch(booksFailed(error)))
 }
 
-export { booksRequested, booksLoaded, booksFailed, fetchBooks };
+export { booksRequested, booksLoaded, booksFailed, fetchBooks, bookAddedToCart };

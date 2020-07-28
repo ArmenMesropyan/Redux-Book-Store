@@ -2,18 +2,12 @@ const initialState = {
     books: [],
     loading: true,
     error: null,
-    orderItems: [
-        {
-            id: 1,
-            title: 'A Typographical Journey of Typography Through the Inland Printer, 1883-1900 compiled by Maurice Annenberg',
-            count: 1,
-            price: 200,
-        }
-    ],
+    orderItems: [],
     totalOrder: 220,
 }
 
 const reducer = (state = initialState, action) => {
+    console.log('action.type: ', action.type);
     switch (action.type) {
         case 'FETCH_BOOKS_FAILURE': 
             return {
@@ -36,6 +30,21 @@ const reducer = (state = initialState, action) => {
                 loading: false,
                 error: null,
             }
+        case 'BOOK_ADDED_TO_CART': 
+            const { id, title, price } = state.books.find(({ id }) => id === action.payload);
+            const newItem = {
+                id,
+                title,
+                count: 1,
+                price,
+            }
+            return {
+                ...state,
+                orderItems: [
+                    ...state.orderItems,
+                    newItem,
+                ]
+            };
         default:
             return state;
     }

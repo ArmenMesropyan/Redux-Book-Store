@@ -5,9 +5,9 @@ import ErrorIndicator from '../error-indicator';
 import { connect } from 'react-redux';
 import { withBookStore } from '../hoc';
 import { compose } from '../../utils';
-import { fetchBooks } from '../../actions';
+import { fetchBooks, bookAddedToCart } from '../../actions';
 
-const BookListContainer = ({ loading, error, books, fetchBooks }) => {
+const BookListContainer = ({ loading, error, books, fetchBooks, onAddedToCart }) => {
     useEffect(() => {
         fetchBooks();
     }, []);
@@ -15,12 +15,16 @@ const BookListContainer = ({ loading, error, books, fetchBooks }) => {
     if (loading) return <Spinner className="books__loading"/>
     if (error) return <ErrorIndicator />
 
-    return <BookList books={books} />
+    return <BookList books={books} onAddedToCart={onAddedToCart}/>
 }
 
-const BookList = ({ books }) => {
+const BookList = ({ books, onAddedToCart }) => {
     const elements = books.map(({ id, ...book }) => (
-        <BookListItem book={book} key={id}/>
+        <BookListItem
+            book={book}
+            key={id}
+            onAddedToCart={() => onAddedToCart(id)}
+        />
     ));
 
     return (
@@ -37,6 +41,7 @@ const BookList = ({ books }) => {
 const mapStateToProps = ({ books, loading, error }) => ({ books, loading, error });
 const mapDispatchToProps = (dispatch, { bookStore }) => ({
     fetchBooks: fetchBooks(dispatch, bookStore),
+    onAddedToCart: (id) => dispatch(bookAddedToCart(id))
 })
 
 export default compose(

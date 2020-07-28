@@ -1,0 +1,23 @@
+.order-table .order-table__actions {
+    padding: 0.6rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.order-table__actions button {
+    margin-right: 5px;
+    font-size: 0;
+}
+
+.order-table__actions .icon {
+    font-size: 14px;
+}
+
+.order-table__actions button:last-child {
+    margin-right: 0;
+}
+
+.order-total {
+    display: block;
+    text-align: right;
+}

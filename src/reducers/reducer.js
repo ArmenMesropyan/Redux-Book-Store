@@ -22,7 +22,7 @@ const updateCart = (items, newItem, itemIndex) => {
     }
 }
 
-const updateItem = (book, item = {}) => {
+const addItem = (book, item = {}) => {
     const {
         id = book.id,
         title = book.title,
@@ -34,6 +34,26 @@ const updateItem = (book, item = {}) => {
         count: count + 1,
         price: price + book.price,
     }
+}
+
+const removeBook = (items, index) => {
+    return [
+        ...items.slice(0, index),
+        ...items.slice(index + 1)
+    ]
+}
+
+const minuseItem = (items, { price, count, ...minusedBook }, currentBook) => {
+    const index = items.findIndex(({ id }) => currentBook.id === id);
+    if (count - 1) {
+        const newItem = {
+            ...minusedBook,
+            count: count - 1,
+            price: price - currentBook.price
+        }
+
+        return updateCart(items, newItem, index);
+    } else return removeBook(items, index);
 }
 
 const reducer = (state = initialState, action) => {
@@ -63,12 +83,25 @@ const reducer = (state = initialState, action) => {
             const book = state.books.find(({ id }) => action.payload === id);
             const itemIndex = state.orderItems.findIndex(({ id }) => action.payload === id);
             const item = state.orderItems[itemIndex];
-            const newItem = updateItem(book, item);
+            const newItem = addItem(book, item);
 
             return {
                 ...state,
                 orderItems: updateCart(state.orderItems, newItem, itemIndex)
             }
+        case 'BOOK_REMOVED_IN_CART':
+            const bookIndex = state.orderItems.findIndex(({ id }) => action.payload === id);
+            return {
+                ...state,
+                orderItems: removeBook(state.orderItems, bookIndex),
+            };
+        case 'BOOK_MINUSED_IN_CART':
+            const minusedBook = state.orderItems.find(({ id }) => action.payload === id);
+            const currentBook = state.books.find(({ id }) => action.payload === id);
+            return {
+                ...state,
+                orderItems: minuseItem(state.orderItems, minusedBook, currentBook),
+            };
         default:
             return state;
     }

@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
-const OrderTable = ({ total, items, onIncrease, onDecrease, onDelete }) => {
+const OrderTable = ({ total, items, bookAddedToCart, bookRemovedInCart, bookMinusedInCart }) => {
     const renderRow = (item, idx) => {
         const { title, id, count, price } = item;
         return (
@@ -13,19 +14,19 @@ const OrderTable = ({ total, items, onIncrease, onDecrease, onDelete }) => {
                 <td className="order-table__actions">
                     <button
                         className="btn btn-outline-warning"
-                        onClick={() => onDecrease(id)}>
+                        onClick={() => bookMinusedInCart(id)}>
                         Minus Count
                         <i className="fas fa-minus icon"></i>
                     </button>
                     <button
                         className="btn btn-outline-success"
-                        onClick={() => onIncrease(id)}>
+                        onClick={() => bookAddedToCart(id)}>
                         Plus Count
                         <i className="fas fa-plus icon"></i>
                     </button>
                     <button
                         className="btn btn-outline-danger"
-                        onClick={() => onDelete(id)}>
+                        onClick={() => bookRemovedInCart(id)}>
                         Delete Book
                         <i className="fas fa-trash icon"></i>
                     </button>
@@ -59,10 +60,4 @@ const mapStateToProps = ({ orderItems, totalOrder }) => ({
     total: totalOrder,
 })
 
-const mapDispatchToProps = () => ({
-    onIncrease: (id) => console.log(id),
-    onDecrease: (id) => console.log(id),
-    onDelete: (id) => console.log(id),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(OrderTable);
+export default connect(mapStateToProps, actions)(OrderTable);
